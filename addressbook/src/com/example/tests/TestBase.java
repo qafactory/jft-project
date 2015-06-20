@@ -1,6 +1,7 @@
 package com.example.tests;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
@@ -35,6 +36,46 @@ public class TestBase {
         if (!"".equals(verificationErrorString)) {
             fail(verificationErrorString);
         }
+    }
+
+    protected void returnToContactPage() {
+        driver.findElement(By.linkText("home page")).click();
+    }
+
+    protected void submitContactCreation() {
+        driver.findElement(By.name("submit")).click();
+    }
+
+    protected void initContactCreation() {
+        driver.findElement(By.linkText("add new")).click();
+    }
+
+    protected void fillContactForm(ContactData contactData) {
+        driver.findElement(By.name("firstname")).clear();
+        driver.findElement(By.name("firstname")).sendKeys(contactData.firstname);
+        driver.findElement(By.name("lastname")).clear();
+        driver.findElement(By.name("lastname")).sendKeys(contactData.lastname);
+        driver.findElement(By.name("address")).clear();
+        driver.findElement(By.name("address")).sendKeys(contactData.address);
+        driver.findElement(By.name("home")).clear();
+        driver.findElement(By.name("home")).sendKeys(contactData.homephone);
+        driver.findElement(By.name("mobile")).clear();
+        driver.findElement(By.name("mobile")).sendKeys(contactData.mobilephone);
+        driver.findElement(By.name("work")).clear();
+        driver.findElement(By.name("work")).sendKeys(contactData.workphone);
+        driver.findElement(By.name("email")).clear();
+        driver.findElement(By.name("email")).sendKeys(contactData.email1);
+        driver.findElement(By.name("email2")).clear();
+        driver.findElement(By.name("email2")).sendKeys(contactData.email2);
+        new Select(driver.findElement(By.name("bday"))).selectByVisibleText(contactData.bday);
+        new Select(driver.findElement(By.name("bmonth"))).selectByVisibleText(contactData.bmonth);
+        driver.findElement(By.name("byear")).clear();
+        driver.findElement(By.name("byear")).sendKeys(contactData.byear);
+        new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.group);
+        driver.findElement(By.name("address2")).clear();
+        driver.findElement(By.name("address2")).sendKeys(contactData.address2);
+        driver.findElement(By.name("phone2")).clear();
+        driver.findElement(By.name("phone2")).sendKeys(contactData.phone2);
     }
 
     protected void returnToGroupsPage() {
