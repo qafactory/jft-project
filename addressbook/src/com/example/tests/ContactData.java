@@ -1,6 +1,7 @@
 package com.example.tests;
 
 public class ContactData {
+
     public String firstname;
     public String lastname;
     public String address;
@@ -35,5 +36,4 @@ public class ContactData {
 
     public ContactData(){
     }
-
 }

@@ -5,14 +5,15 @@ import org.testng.annotations.Test;
 /**
  * Created by Emma on 6/20/2015.
  */
-public class ContactCreation extends TestBase{
+public class ContactCreationTest extends TestBase{
+
     @Test
     public void testNonEmptyContactCreation() throws Exception {
-        openMainPage();
-        initContactCreation();
+        app.getNavigationHelper().openMainPage();
+        app.getContactHelper().initContactCreation();
         ContactData contact = new ContactData();
-        contact.firstname = "Bob";
-        contact.lastname = "Tal";
+        contact.firstname = "First";
+        contact.lastname = "Last";
         contact.address = "New York";
         contact.homephone = "2555555";
         contact.mobilephone = "789352524354";
@@ -25,15 +26,15 @@ public class ContactCreation extends TestBase{
         contact.group = "work";
         contact.address2 = "Chicago";
         contact.phone2 = "20349809";
-        fillContactForm(contact);
-        submitContactCreation();
-        returnToContactPage();
+        app.getContactHelper().fillContactForm(contact);
+        app.getContactHelper().submitContactCreation();
+        app.getContactHelper().returnToHomePage();
     }
 
     @Test
     public void testEmptyContactCreation() throws Exception {
-        openMainPage();
-        initContactCreation();
+        app.getNavigationHelper().openMainPage();
+        app.getContactHelper().initContactCreation();
         ContactData contact = new ContactData();
         contact.firstname = "";
         contact.lastname = "";
@@ -49,12 +50,8 @@ public class ContactCreation extends TestBase{
         contact.group = "[none]";
         contact.address2 = "";
         contact.phone2 = "";
-        fillContactForm(contact);
-        submitContactCreation();
-        returnToContactPage();
+        app.getContactHelper().fillContactForm(contact);
+        app.getContactHelper().submitContactCreation();
+        app.getContactHelper().returnToHomePage();
     }
-
-
-
-
 }
