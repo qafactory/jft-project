@@ -2,6 +2,10 @@ package com.example.framework;
 
 import com.example.tests.ContactData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase{
     
@@ -39,7 +43,7 @@ public class ContactHelper extends HelperBase{
     }
 
     public void initContactEditing(int index){
-        click(By.xpath("(//img[@title='Edit'])[" + index + "]"));
+        click(By.xpath("(//img[@title='Edit'])[" + (index+1) + "]"));
     }
 
     public void submitContactModification() {
@@ -51,11 +55,23 @@ public class ContactHelper extends HelperBase{
     }
 
     public void viewContactDetails(int index) {
-        click(By.xpath("(//img[@title='Details'])[" + index + "]"));
+        click(By.xpath("(//img[@title='Details'])[" + (index+1) + "]"));
     }
 
 
     public void initContactModification() {
         click(By.xpath("//input[@name='modifiy']"));
+    }
+
+    public List<ContactData> getContacts() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> entries =  driver.findElements(By.xpath("//tbody/tr[@name='entry']/td[2]"));
+        for (WebElement entry: entries){
+            ContactData contact = new ContactData();
+            String name = entry.getText();
+            contact.lastname = name;
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }

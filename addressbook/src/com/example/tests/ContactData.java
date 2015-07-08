@@ -1,6 +1,6 @@
 package com.example.tests;
 
-public class ContactData {
+public class ContactData implements Comparable<ContactData>{
 
     public String firstname;
     public String lastname;
@@ -35,5 +35,46 @@ public class ContactData {
     }
 
     public ContactData(){
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", address='" + address + '\'' +
+                ", homephone='" + homephone + '\'' +
+                ", mobilephone='" + mobilephone + '\'' +
+                ", workphone='" + workphone + '\'' +
+                ", email1='" + email1 + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", bday='" + bday + '\'' +
+                ", bmonth='" + bmonth + '\'' +
+                ", byear='" + byear + '\'' +
+                ", group='" + group + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", phone2='" + phone2 + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        return !(lastname != null ? !lastname.equals(that.lastname) : that.lastname != null);
+    }
+
+    @Override
+    public int hashCode() {
+        //int result = lastname != null ? lastname.hashCode() : 0;
+        return lastname != null ? lastname.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(ContactData other) {
+        return this.lastname.toLowerCase().compareTo(other.lastname.toLowerCase());
     }
 }

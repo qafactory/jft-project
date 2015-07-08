@@ -11,7 +11,7 @@ public class NavigationHelper extends HelperBase{
         super(manager);
     }
 
-    public void openMainPage() {
+    public  void openMainPage() {
         driver.get(manager.baseUrl + "/addressbookv4.1.4/");
     }
 
