@@ -55,7 +55,7 @@ public class ContactHelper extends HelperBase{
     }
 
     public void viewContactDetails(int index) {
-        click(By.xpath("(//img[@title='Details'])[" + (index+1) + "]"));
+        click(By.xpath("(//img[@title='Details'])[" + (index + 1) + "]"));
     }
 
 
@@ -73,5 +73,35 @@ public class ContactHelper extends HelperBase{
             contacts.add(contact);
         }
         return contacts;
+    }
+
+    public List<String> getFormDaysValues(){
+        List<String> days = new ArrayList<String>();
+        List<WebElement> values = driver.findElements(By.xpath("//select[@name='bday']/option"));
+        for (int i = 0; i < values.size(); i++) {
+            String text = values.get(i).getText();
+            days.add(text);
+        }
+        return days;
+    }
+
+    public List<String> getFormMonthsValues(){
+        List<String> months = new ArrayList<String>();
+        List<WebElement> values = driver.findElements(By.xpath("//select[@name='bmonth']/option"));
+        for(int i = 0; i< values.size(); i++){
+            String text = values.get(i).getText();
+            months.add(text);
+        }
+        return months;
+    }
+
+    public List<String> getFormGroupsValues(){
+        List<String> groups = new ArrayList<String>();
+        List<WebElement> values = driver.findElements(By.xpath("//select[@name='new_group']/option"));
+        for(int i = 0; i< values.size(); i++){
+            String text = values.get(i).getText();
+            groups.add(text);
+        }
+        return groups;
     }
 }

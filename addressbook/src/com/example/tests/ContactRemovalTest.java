@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static org.testng.Assert.assertEquals;
 
@@ -19,8 +20,11 @@ public class ContactRemovalTest extends TestBase{
         // save old state
         List<ContactData> oldList = app.getContactHelper().getContacts();
 
+        Random rnd = new Random();
+        int index = rnd.nextInt(oldList.size()-1);
+
         // actions
-        app.getContactHelper().initContactEditing(1);
+        app.getContactHelper().initContactEditing(index);
         app.getContactHelper().deleteContact();
         app.getContactHelper().returnToHomePage();
 
@@ -28,7 +32,7 @@ public class ContactRemovalTest extends TestBase{
         List<ContactData> newList = app.getContactHelper().getContacts();
 
         // compare states
-        oldList.remove(1);
+        oldList.remove(index);
         Collections.sort(oldList);
         assertEquals(newList, oldList);
     }
@@ -40,8 +44,11 @@ public class ContactRemovalTest extends TestBase{
         // save old state
         List<ContactData> oldList = app.getContactHelper().getContacts();
 
+        Random rnd = new Random();
+        int index = rnd.nextInt(oldList.size()-1);
+
         // actions
-        app.getContactHelper().viewContactDetails(1);
+        app.getContactHelper().viewContactDetails(index);
         app.getContactHelper().initContactModification();
         app.getContactHelper().deleteContact();
         app.getContactHelper().returnToHomePage();
@@ -50,7 +57,7 @@ public class ContactRemovalTest extends TestBase{
         List<ContactData> newList = app.getContactHelper().getContacts();
 
         // compare states
-        oldList.remove(1);
+        oldList.remove(index);
         Collections.sort(oldList);
         assertEquals(newList, oldList);
     }
