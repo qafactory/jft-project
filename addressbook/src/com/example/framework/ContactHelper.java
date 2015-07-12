@@ -8,38 +8,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactHelper extends HelperBase{
+
+    public static boolean CREATION   = true;
+    public static boolean MODIFICATION = false;
     
     public ContactHelper(ApplicationManager manager) {
         super(manager);
     }
 
+    List<ContactData> cashedContacts;
+
+    public List<ContactData> getContacts() {
+        if(cashedContacts == null){
+            rebuildCache();
+        }
+        return cashedContacts;
+    }
+
+    private void rebuildCache() {
+        cashedContacts = new ArrayList<ContactData>();
+        List<WebElement> entries =  driver.findElements(By.xpath("//tbody/tr[@name='entry']/td[2]"));
+        for (WebElement entry: entries){
+            ContactData contact = new ContactData();
+            String name = entry.getText();
+            contact.lastname = name;
+            cashedContacts.add(contact);
+        }
+    }
+
     public void submitContactCreation() {
         click(By.name("submit"));
+        cashedContacts = null;
     }
 
     public void initContactCreation() {
         click(By.linkText("add new"));
     }
 
-    public void fillContactForm(ContactData contactData) {
-        type(By.name("firstname"), contactData.firstname);
-        type(By.name("lastname"), contactData.lastname);
-        type(By.name("address"), contactData.address);
-        type(By.name("home"), contactData.homephone);
-        type(By.name("mobile"), contactData.mobilephone);
-        type(By.name("work"), contactData.workphone);
-        type(By.name("email"), contactData.email1);
-        type(By.name("email2"), contactData.email2);
-        selectByText(By.name("bday"), contactData.bday);
-        selectByText(By.name("bmonth"), contactData.bmonth);
-        type(By.name("byear"), contactData.byear);
-        selectByText(By.name("new_group"), contactData.group);
-        type(By.name("address2"), contactData.address2);
-        type(By.name("phone2"), contactData.phone2);
+    public void fillContactForm(ContactData contact, boolean formType) {
+        type(By.name("firstname"), contact.firstname);
+        type(By.name("lastname"), contact.lastname);
+        type(By.name("address"), contact.address);
+        type(By.name("home"), contact.homephone);
+        type(By.name("mobile"), contact.mobilephone);
+        type(By.name("work"), contact.workphone);
+        type(By.name("email"), contact.email1);
+        type(By.name("email2"), contact.email2);
+        selectByText(By.name("bday"), contact.bday);
+        selectByText(By.name("bmonth"), contact.bmonth);
+        type(By.name("byear"), contact.byear);
+        if(formType == CREATION){
+            selectByText(By.name("new_group"), contact.group);
+        } else {
+            if(driver.findElements(By.name("new_group")).size() != 0){
+                throw new Error("Group selector exists in contact modification form");
+            }
+        }
+        type(By.name("address2"), contact.address2);
+        type(By.name("phone2"), contact.phone2);
     }
 
     public void deleteContact() {
         click(By.xpath("//input[@value='Delete']"));
+        cashedContacts = null;
     }
 
     public void initContactEditing(int index){
@@ -48,6 +79,7 @@ public class ContactHelper extends HelperBase{
 
     public void submitContactModification() {
         click(By.xpath("//input[@value='Update']"));
+        cashedContacts = null;
     }
 
     public void returnToHomePage() {
@@ -61,18 +93,6 @@ public class ContactHelper extends HelperBase{
 
     public void initContactModification() {
         click(By.xpath("//input[@name='modifiy']"));
-    }
-
-    public List<ContactData> getContacts() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> entries =  driver.findElements(By.xpath("//tbody/tr[@name='entry']/td[2]"));
-        for (WebElement entry: entries){
-            ContactData contact = new ContactData();
-            String name = entry.getText();
-            contact.lastname = name;
-            contacts.add(contact);
-        }
-        return contacts;
     }
 
     public List<String> getFormDaysValues(){

@@ -1,43 +1,35 @@
 package com.example.tests;
 
-
+import com.example.utils.SortedListOf;
 import org.testng.annotations.Test;
-import java.util.*;
-import static org.testng.Assert.assertEquals;
 
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class GroupCreationTest extends TestBase{
 
     @Test(dataProvider = "randomValidGroupsGenerator")
     public void testGroupCreationWithValidData(GroupData group) throws Exception {
-        app.getNavigationHelper().openMainPage();
-        app.getNavigationHelper().gotoGroupsPage();
-
         // save old state
-        List<GroupData> oldList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
 
         // actions
-        app.getGroupHelper().initGroupCreation();
-        app.getGroupHelper().fillGroupForm(group);
-        app.getGroupHelper().submitGroupCreation();
-        app.getGroupHelper().returnToGroupsPage();
+        app.getGroupHelper().createGroup(group);
 
         // save new state
-        List<GroupData> newList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
 
         // compare states
-        oldList.add(group);
-        Collections.sort(oldList);
-        assertEquals(newList, oldList);
+        assertThat(newList, equalTo(oldList.withAdded(group)));
     }
 
     @Test
     public void testGroupCreationWithInvalidData() {
-        app.getNavigationHelper().openMainPage();
-        app.getNavigationHelper().gotoGroupsPage();
+        app.navigateTo().mainPage();
+        app.navigateTo().groupsPage();
 
         // save old state
-        List<GroupData> oldList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
 
         // actions
         app.getGroupHelper().initGroupCreation();
@@ -47,9 +39,9 @@ public class GroupCreationTest extends TestBase{
         app.getGroupHelper().returnToGroupsPage();
 
         // save new state
-        List<GroupData> newList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
 
         // compare states
-        assertEquals(newList, oldList);
+        assertThat(newList, equalTo(oldList));
     }
 }

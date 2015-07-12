@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.testng.Assert.assertEquals;
+import static com.example.framework.ContactHelper.MODIFICATION;
 
 /**
  * Created by Emma on 6/29/2015.
@@ -15,17 +16,13 @@ import static org.testng.Assert.assertEquals;
 public class ContactModificationTest extends TestBase {
 
     @BeforeClass
-    public void getFormValues(){
-        app.getNavigationHelper().openMainPage();
-        app.getContactHelper().initContactCreation();
-        days = app.getContactHelper().getFormDaysValues();
-        months = app.getContactHelper().getFormMonthsValues();
-        groups = app.getContactHelper().getFormGroupsValues();
+    public void prerequisite(){
+        getContactFormDropdownValues();
     }
 
-    @Test(dataProvider = "randomValidContactsModificationGenerator")
+    @Test(dataProvider = "randomValidContactsGenerator")
     public void editSomeContact(ContactData contact){
-        app.getNavigationHelper().openMainPage();
+        app.navigateTo().mainPage();
 
         // save old state
         List<ContactData> oldList = app.getContactHelper().getContacts();
@@ -35,7 +32,7 @@ public class ContactModificationTest extends TestBase {
 
         // actions
         app.getContactHelper().initContactEditing(index);
-        app.getContactHelper().fillContactForm(contact);
+        app.getContactHelper().fillContactForm(contact, MODIFICATION);
         app.getContactHelper().submitContactModification();
         app.getContactHelper().returnToHomePage();
 
@@ -49,9 +46,9 @@ public class ContactModificationTest extends TestBase {
         assertEquals(newList, oldList);
     }
 
-    @Test(dataProvider = "randomValidContactsModificationGenerator")
+    @Test(dataProvider = "randomValidContactsGenerator")
     public void modifySomeContact(ContactData contact) {
-        app.getNavigationHelper().openMainPage();
+        app.navigateTo().mainPage();
 
         // save old state
         List<ContactData> oldList = app.getContactHelper().getContacts();
@@ -62,7 +59,7 @@ public class ContactModificationTest extends TestBase {
         // actions
         app.getContactHelper().viewContactDetails(index);
         app.getContactHelper().initContactModification();
-        app.getContactHelper().fillContactForm(contact);
+        app.getContactHelper().fillContactForm(contact, MODIFICATION);
         app.getContactHelper().submitContactModification();
         app.getContactHelper().returnToHomePage();
 
