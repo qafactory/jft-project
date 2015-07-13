@@ -22,26 +22,4 @@ public class GroupCreationTest extends TestBase{
         // compare states
         assertThat(newList, equalTo(oldList.withAdded(group)));
     }
-
-    @Test
-    public void testGroupCreationWithInvalidData() {
-        app.navigateTo().mainPage();
-        app.navigateTo().groupsPage();
-
-        // save old state
-        SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
-
-        // actions
-        app.getGroupHelper().initGroupCreation();
-        GroupData group = new GroupData("fox's", "", "");
-        app.getGroupHelper().fillGroupForm(group);
-        app.getGroupHelper().submitGroupCreation();
-        app.getGroupHelper().returnToGroupsPage();
-
-        // save new state
-        SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
-
-        // compare states
-        assertThat(newList, equalTo(oldList));
-    }
 }

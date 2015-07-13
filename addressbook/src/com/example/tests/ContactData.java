@@ -69,12 +69,81 @@ public class ContactData implements Comparable<ContactData>{
 
     @Override
     public int hashCode() {
-        //int result = lastname != null ? lastname.hashCode() : 0;
         return lastname != null ? lastname.hashCode() : 0;
     }
 
     @Override
     public int compareTo(ContactData other) {
         return this.lastname.toLowerCase().compareTo(other.lastname.toLowerCase());
+    }
+
+    public ContactData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withHomePhone(String homephone) {
+        this.homephone = homephone;
+        return this;
+    }
+
+    public ContactData withMobilePhone(String mobilephone) {
+        this.mobilephone = mobilephone;
+        return this;
+    }
+
+    public ContactData withWorkPhone(String workphone) {
+        this.workphone = workphone;
+        return this;
+    }
+
+    public ContactData withEmail1(String email1) {
+        this.email1 = email1;
+        return this;
+    }
+
+    public ContactData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public ContactData withBday(String bday) {
+        this.bday = bday;
+        return this;
+    }
+
+    public ContactData withBmonth(String bmonth) {
+        this.bmonth = bmonth;
+        return this;
+    }
+
+    public ContactData withByear(String byear) {
+        this.byear = byear;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
+    public ContactData withAddress2(String address2) {
+        this.address2 = address2;
+        return this;
+    }
+
+    public ContactData withPhone2(String phone2) {
+        this.phone2 = phone2;
+        return this;
     }
 }

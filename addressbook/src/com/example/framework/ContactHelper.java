@@ -1,6 +1,7 @@
 package com.example.framework;
 
 import com.example.tests.ContactData;
+import com.example.utils.SortedListOf;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -16,9 +17,9 @@ public class ContactHelper extends HelperBase{
         super(manager);
     }
 
-    List<ContactData> cashedContacts;
+    private SortedListOf<ContactData> cashedContacts;
 
-    public List<ContactData> getContacts() {
+    public SortedListOf<ContactData> getContacts() {
         if(cashedContacts == null){
             rebuildCache();
         }
@@ -26,26 +27,69 @@ public class ContactHelper extends HelperBase{
     }
 
     private void rebuildCache() {
-        cashedContacts = new ArrayList<ContactData>();
+        cashedContacts = new SortedListOf<ContactData>();
+        manager.navigateTo().mainPage();
         List<WebElement> entries =  driver.findElements(By.xpath("//tbody/tr[@name='entry']/td[2]"));
-        for (WebElement entry: entries){
-            ContactData contact = new ContactData();
+        for (WebElement entry: entries){ContactData contact = new ContactData();
             String name = entry.getText();
-            contact.lastname = name;
-            cashedContacts.add(contact);
+            cashedContacts.add(new ContactData().withLastname(name));
         }
     }
 
-    public void submitContactCreation() {
-        click(By.name("submit"));
-        cashedContacts = null;
+    public ContactHelper createContact(ContactData contact){
+        manager.navigateTo().mainPage();
+        initContactCreation();
+        fillContactForm(contact, CREATION);
+        submitContactCreation();
+        returnToHomePage();
+        rebuildCache();
+        return this;
     }
 
-    public void initContactCreation() {
+    public ContactHelper editContact(int index, ContactData contact){
+        manager.navigateTo().mainPage();
+        initContactEditing(index);
+        fillContactForm(contact, MODIFICATION);
+        submitContactModification();
+        returnToHomePage();
+        return this;
+    }
+
+    public ContactHelper modifyContact(int index, ContactData contact){
+        manager.navigateTo().mainPage();
+        viewContactDetails(index);
+        initContactModification();
+        fillContactForm(contact, MODIFICATION);
+        submitContactModification();
+        returnToHomePage();
+        return this;
+    }
+
+    public ContactHelper deleteContactByEdit(int index){
+        manager.navigateTo().mainPage();
+        initContactEditing(index);
+        submitContactDeletion();
+        returnToHomePage();
+        return this;
+    }
+
+    public ContactHelper deleteContactByModify(int index){
+        manager.navigateTo().mainPage();
+        viewContactDetails(index);
+        initContactModification();
+        submitContactDeletion();
+        returnToHomePage();
+        return this;
+    }
+
+    //-----------------------------------------------------------------------------
+
+    public ContactHelper initContactCreation() {
         click(By.linkText("add new"));
+        return this;
     }
 
-    public void fillContactForm(ContactData contact, boolean formType) {
+    public ContactHelper fillContactForm(ContactData contact, boolean formType) {
         type(By.name("firstname"), contact.firstname);
         type(By.name("lastname"), contact.lastname);
         type(By.name("address"), contact.address);
@@ -66,34 +110,47 @@ public class ContactHelper extends HelperBase{
         }
         type(By.name("address2"), contact.address2);
         type(By.name("phone2"), contact.phone2);
+        return this;
     }
 
-    public void deleteContact() {
-        click(By.xpath("//input[@value='Delete']"));
+    public ContactHelper submitContactCreation() {
+        click(By.name("submit"));
         cashedContacts = null;
+        return this;
     }
 
-    public void initContactEditing(int index){
-        click(By.xpath("(//img[@title='Edit'])[" + (index+1) + "]"));
+    public ContactHelper initContactEditing(int index){
+        click(By.xpath("(//img[@title='Edit'])[" + (index + 1) + "]"));
+        return this;
     }
 
-    public void submitContactModification() {
+    public ContactHelper viewContactDetails(int index) {
+        click(By.xpath("(//img[@title='Details'])[" + (index + 1) + "]"));
+        return this;
+    }
+
+    public ContactHelper initContactModification() {
+        click(By.xpath("//input[@name='modifiy']"));
+        return this;
+    }
+
+    public ContactHelper submitContactModification() {
         click(By.xpath("//input[@value='Update']"));
         cashedContacts = null;
+        return this;
     }
 
-    public void returnToHomePage() {
+    public ContactHelper submitContactDeletion() {
+        click(By.xpath("//input[@value='Delete']"));
+        cashedContacts = null;
+        return this;
+    }
+
+    public ContactHelper returnToHomePage() {
         click(By.linkText("home page"));
+        return this;
     }
 
-    public void viewContactDetails(int index) {
-        click(By.xpath("(//img[@title='Details'])[" + (index + 1) + "]"));
-    }
-
-
-    public void initContactModification() {
-        click(By.xpath("//input[@name='modifiy']"));
-    }
 
     public List<String> getFormDaysValues(){
         List<String> days = new ArrayList<String>();
