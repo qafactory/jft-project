@@ -1,7 +1,6 @@
 package com.example.tests;
 
 import com.example.utils.SortedListOf;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.util.Random;
 import static org.junit.Assert.assertThat;
@@ -11,11 +10,6 @@ import static org.hamcrest.Matchers.*;
  * Created by Emma on 6/29/2015.
  */
 public class ContactModificationTest extends TestBase {
-
-    @BeforeClass
-    public void prerequisite(){
-        getContactFormDropdownValues();
-    }
 
     @Test(dataProvider = "randomValidContactsGenerator")
     public void editSomeContact(ContactData contact){

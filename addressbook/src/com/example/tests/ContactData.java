@@ -146,4 +146,60 @@ public class ContactData implements Comparable<ContactData>{
         this.phone2 = phone2;
         return this;
     }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getHomephone() {
+        return homephone;
+    }
+
+    public String getMobilephone() {
+        return mobilephone;
+    }
+
+    public String getWorkphone() {
+        return workphone;
+    }
+
+    public String getEmail1() {
+        return email1;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public String getBday() {
+        return bday;
+    }
+
+    public String getBmonth() {
+        return bmonth;
+    }
+
+    public String getByear() {
+        return byear;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public String getPhone2() {
+        return phone2;
+    }
 }

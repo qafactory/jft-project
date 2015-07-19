@@ -4,7 +4,6 @@ import com.example.tests.GroupData;
 import com.example.utils.SortedListOf;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.util.List;
 
 /**
@@ -106,6 +105,8 @@ public class GroupHelper extends HelperBase{
 
     public void submitGroupDeletion() {
         click(By.xpath("//input[@name='delete']"));
-        cachedGroups = null;
-    }
+        cachedGroups = null;    }
+
 }
+
+
