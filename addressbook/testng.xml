@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Custom suite" parallel="none">
+  <test verbose="1" name="addressbook" annotations="JDK">
+    <classes>
+      <class name="com.example.tests.GroupCreationTest"/>
+      <class name="com.example.tests.GroupModificationTest"/>
+      <class name="com.example.tests.GroupRemovalTest"/>
+      <class name="com.example.tests.ContactCreationTest"/>
+      <class name="com.example.tests.ContactCreationTest"/>
+      <class name="com.example.tests.ContactModificationTest"/>
+      <class name="com.example.tests.ContactRemovalTest"/>
+    </classes>
+  </test>
+</suite>

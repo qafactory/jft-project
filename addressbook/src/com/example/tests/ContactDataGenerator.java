@@ -1,11 +1,6 @@
 package com.example.tests;
 
-import com.example.framework.ApplicationManager;
-import com.example.utils.SortedListOf;
 import com.thoughtworks.xstream.XStream;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
