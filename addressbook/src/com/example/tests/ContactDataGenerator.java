@@ -68,6 +68,12 @@ public class ContactDataGenerator {
         writer.close();
     }
 
+    public static List<ContactData> loadContactsFromXmlFile(File file) throws IOException{
+        XStream xstream = new XStream();
+        xstream.alias("contact", ContactData.class);
+        return (List<ContactData> ) xstream.fromXML(file);
+    }
+
     public static List<ContactData> generateRandomContacts(int amount) {
         List<ContactData> list = new ArrayList<ContactData>();
         for (int i = 0; i < amount; i++){
