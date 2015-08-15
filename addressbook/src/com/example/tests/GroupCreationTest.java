@@ -23,15 +23,15 @@ public class GroupCreationTest extends TestBase{
     @Test(dataProvider = "groupsFromFile")
     public void testGroupCreationWithValidData(GroupData group) throws Exception {
         // save old state
-        SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> oldList = app.getModel().getGroups();
 
         // actions
         app.getGroupHelper().createGroup(group);
 
         // save new state
-        SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> newList = app.getModel().getGroups();
 
         // compare states
-        assertThat(newList, equalTo(oldList.withAdded(group)));
+        assertThat(newList, equalTo(oldList));
     }
 }

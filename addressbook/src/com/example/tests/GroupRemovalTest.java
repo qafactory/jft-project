@@ -17,7 +17,7 @@ public class GroupRemovalTest extends TestBase{
     @Test
     public void deleteSomeGroup(){
         // save old state
-        SortedListOf<GroupData> oldList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> oldList = app.getGroupHelper().getUiGroups();
 
         Random rnd = new Random();
         int index = rnd.nextInt(oldList.size()-1);
@@ -26,7 +26,7 @@ public class GroupRemovalTest extends TestBase{
         app.getGroupHelper().deleteGroup(index);
 
         // save new state
-        SortedListOf<GroupData> newList = app.getGroupHelper().getGroups();
+        SortedListOf<GroupData> newList = app.getGroupHelper().getUiGroups();
 
         // compare states
         assertThat(newList, equalTo(oldList.without(index)));

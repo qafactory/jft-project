@@ -1,17 +1,22 @@
 package com.example.tests;
 
+import com.example.framework.ApplicationManager;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 /**
  * Created by Emma on 7/19/2015.
  */
-public class ContactDataGenerator {
+public class ContactDataGenerator extends TestBase{
+
+    static List<String> groups = new ArrayList<>();
 
     public static void main(String[] args) throws IOException{
         if (args.length < 3){
@@ -27,6 +32,8 @@ public class ContactDataGenerator {
             System.out.println("File already exists, please remove it manually: " + file);
             return;
         }
+
+        getValuesFromDB();
 
         List<ContactData> contacts = generateRandomContacts(amount);
 
@@ -84,7 +91,7 @@ public class ContactDataGenerator {
                     .withBday(generateRandomDaySelection())
                     .withBmonth(generateRandomMonthSelection())
                     .withByear(generateRandomString())
-                    .withGroup("[none]")
+                    .withGroup(generateRandomGroupSelection())
                     .withAddress2(generateRandomString())
                     .withPhone2(generateRandomString());
             list.add(contact);
@@ -101,6 +108,18 @@ public class ContactDataGenerator {
         }
     }
 
+    public static void getValuesFromDB() {
+        String configFile = System.getProperty("configFile", "chrome.properties");
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileReader((new File(configFile))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ApplicationManager app = new ApplicationManager(properties);
+        groups = app.getHibernateHelper().groupNames();
+    }
+
     public static String generateRandomDaySelection(){
         Random rnd = new Random();
         int index = rnd.nextInt(31)+1;
@@ -113,5 +132,11 @@ public class ContactDataGenerator {
         Random rnd = new Random();
         int index = rnd.nextInt(months.length);
         return months[index];
+    }
+
+    private static String generateRandomGroupSelection() {
+        Random rnd = new Random();
+        int index = rnd.nextInt(groups.size());
+        return groups.get(index);
     }
 }

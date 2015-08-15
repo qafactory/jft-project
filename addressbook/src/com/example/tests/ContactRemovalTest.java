@@ -16,7 +16,7 @@ public class ContactRemovalTest extends TestBase{
     @Test
     public void deleteSomeContactByEdit(){
         // save old state
-        SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> oldList = app.getModel().getContacts();
 
         Random rnd = new Random();
         int index = rnd.nextInt(oldList.size()-1);
@@ -25,16 +25,16 @@ public class ContactRemovalTest extends TestBase{
         app.getContactHelper().deleteContactByEdit(index);
 
         // save new state
-        SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> newList = app.getModel().getContacts();
 
         // compare states
-        assertThat(newList, equalTo(oldList.without(index)));
+        assertThat(newList, equalTo(oldList));
     }
 
     @Test
     public void deleteSomeContactByModify(){
         // save old state
-        SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> oldList = app.getModel().getContacts();
 
         Random rnd = new Random();
         int index = rnd.nextInt(oldList.size()-1);
@@ -43,9 +43,9 @@ public class ContactRemovalTest extends TestBase{
         app.getContactHelper().deleteContactByModify(index);
 
         // save new state
-        SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> newList = app.getModel().getContacts();
 
         // compare states
-        assertThat(newList, equalTo(oldList.without(index)));
+        assertThat(newList, equalTo(oldList));
     }
 }

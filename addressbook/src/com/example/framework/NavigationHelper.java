@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 /**
  * Created by Emma on 6/27/2015.
  */
-public class NavigationHelper extends HelperBase{
+public class NavigationHelper extends WebDriverHelperBase {
 
     public NavigationHelper(ApplicationManager manager) {
         super(manager);
@@ -25,7 +25,6 @@ public class NavigationHelper extends HelperBase{
         if(! onGroupsPage()){
             click(By.linkText("groups"));
         }
-
     }
 
     public boolean onGroupsPage() {

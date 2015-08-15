@@ -3,11 +3,9 @@ package com.example.tests;
 import com.example.utils.SortedListOf;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-
 import static com.example.tests.ContactDataGenerator.loadContactsFromXmlFile;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -26,15 +24,15 @@ public class ContactCreationTest extends TestBase{
     @Test(dataProvider = "contactsFromFile")
     public void testContactCreationWithValidData(ContactData contact) throws Exception{
         // save old state
-        SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> oldList = app.getModel().getContacts();
 
         // actions
         app.getContactHelper().createContact(contact);
 
         // save new state
-        SortedListOf<ContactData> newList = app.getContactHelper().getContacts();
+        SortedListOf<ContactData> newList = app.getModel().getContacts();
 
         // compare states
-        assertThat(newList, equalTo(oldList.withAdded(contact)));
+        assertThat(newList, equalTo(oldList));
     }
 }
