@@ -16,8 +16,6 @@ import java.util.Random;
  */
 public class ContactDataGenerator extends TestBase{
 
-    static List<String> groups = new ArrayList<>();
-
     public static void main(String[] args) throws IOException{
         if (args.length < 3){
             System.out.println("Please specify parameters: <amount of test data> <file> <format>");
@@ -32,8 +30,6 @@ public class ContactDataGenerator extends TestBase{
             System.out.println("File already exists, please remove it manually: " + file);
             return;
         }
-
-        getValuesFromDB();
 
         List<ContactData> contacts = generateRandomContacts(amount);
 
@@ -108,18 +104,6 @@ public class ContactDataGenerator extends TestBase{
         }
     }
 
-    public static void getValuesFromDB() {
-        String configFile = System.getProperty("configFile", "chrome.properties");
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileReader((new File(configFile))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ApplicationManager app = new ApplicationManager(properties);
-        groups = app.getHibernateHelper().groupNames();
-    }
-
     public static String generateRandomDaySelection(){
         Random rnd = new Random();
         int index = rnd.nextInt(31)+1;
@@ -135,6 +119,17 @@ public class ContactDataGenerator extends TestBase{
     }
 
     private static String generateRandomGroupSelection() {
+        String configFile = System.getProperty("configFile", "chrome.properties");
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileReader((new File(configFile))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ApplicationManager app = new ApplicationManager(properties);
+
+        List<String> groups = new ArrayList<>();
+        groups = app.getHibernateHelper().groupNames();
         Random rnd = new Random();
         int index = rnd.nextInt(groups.size());
         return groups.get(index);

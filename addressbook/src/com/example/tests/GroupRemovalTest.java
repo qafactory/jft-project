@@ -30,5 +30,15 @@ public class GroupRemovalTest extends TestBase{
 
         // compare states
         assertThat(newList, equalTo(oldList.without(index)));
+
+        // compare model to implementation
+        if(wantToCheck()){
+            if ("yes".equals(app.getProperty("check.db"))){
+                assertThat(app.getModel().getGroups(), equalTo(app.getHibernateHelper().listGroups()));
+            }
+            if ("yes".equals(app.getProperty("check.ui"))) {
+                assertThat(app.getModel().getGroups(), equalTo(app.getGroupHelper().getUiGroups()));
+            }
+        }
     }
 }

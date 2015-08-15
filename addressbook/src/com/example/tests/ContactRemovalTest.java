@@ -29,6 +29,16 @@ public class ContactRemovalTest extends TestBase{
 
         // compare states
         assertThat(newList, equalTo(oldList));
+
+        // compare model to implementation
+        if(wantToCheck()){
+            if ("yes".equals(app.getProperty("check.db"))){
+                assertThat(app.getModel().getContacts(), equalTo(app.getHibernateHelper().listContacts()));
+            }
+            if ("yes".equals(app.getProperty("check.ui"))) {
+                assertThat(app.getModel().getContacts(), equalTo(app.getContactHelper().getUiContacts()));
+            }
+        }
     }
 
     @Test
@@ -47,5 +57,15 @@ public class ContactRemovalTest extends TestBase{
 
         // compare states
         assertThat(newList, equalTo(oldList));
+
+        // compare model to implementation
+        if(wantToCheck()){
+            if ("yes".equals(app.getProperty("check.db"))){
+                assertThat(app.getModel().getContacts(), equalTo(app.getHibernateHelper().listContacts()));
+            }
+            if ("yes".equals(app.getProperty("check.ui"))) {
+                assertThat(app.getModel().getContacts(), equalTo(app.getContactHelper().getUiContacts()));
+            }
+        }
     }
 }

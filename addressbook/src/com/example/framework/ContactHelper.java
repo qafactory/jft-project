@@ -68,7 +68,7 @@ public class ContactHelper extends WebDriverHelperBase {
 
     //-----------------------------------------------------------------------------
 
-    private SortedListOf<ContactData> getUiContacts() {
+    public SortedListOf<ContactData> getUiContacts() {
 
         SortedListOf<ContactData> contacts = new SortedListOf<ContactData>();
         manager.navigateTo().mainPage();
